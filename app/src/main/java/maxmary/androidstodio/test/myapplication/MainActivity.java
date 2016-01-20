@@ -10,6 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView textView;
@@ -20,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        VKSdk.login(this, "wall");
 
         textView = (TextView) findViewById(R.id.textView);
     }
@@ -32,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view){
-        textView.setText("asd");
+        VKRequest request = VKApi.wall().post(VKParameters.from(VKApiConst.MESSAGE, "Я Маша"));
+        request.start();
+        textView.setText("Я знал, что нажмёшь))" + '\n' + "Не переживай ничего с твоим акком не станется");
     }
 }
